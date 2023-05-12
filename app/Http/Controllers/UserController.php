@@ -32,6 +32,29 @@ class UserController extends Controller
         ]);
     }
 
+    public function login(Request $request): JsonResponse
+    {
+        $credentials = $request->validate([
+            'email' => ['required', 'string', 'email', 'max:255'],
+            'password' => ['required', 'string']
+        ]);
+
+        if (Auth::attempt($credentials)) {
+            $request->session()->regenerate();
+
+            $user = User::where('email', $request->email)->first(['id', 'email']);
+
+            return response()->json([
+                'id' => $user->id,
+                'email' => $request->email
+            ]);
+        }
+
+        return response(401)->json([
+            'error' => 'The provided credentials do not match our records.'
+        ]);
+    }
+
     public function logout(Request $request): Response
     {
         Auth::guard('web')->logout();
