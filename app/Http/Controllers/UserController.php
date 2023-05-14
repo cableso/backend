@@ -39,7 +39,7 @@ class UserController extends Controller
             'password' => ['required', 'string']
         ]);
 
-        if (Auth::attempt($credentials)) {
+        if (Auth::attempt($credentials, true)) {
             $request->session()->regenerate();
 
             $user = User::where('email', $request->email)->first(['id', 'email']);
@@ -50,9 +50,9 @@ class UserController extends Controller
             ]);
         }
 
-        return response(401)->json([
+        return response()->json([
             'error' => 'The provided credentials do not match our records.'
-        ]);
+        ], 401);
     }
 
     public function logout(Request $request): Response
@@ -63,5 +63,17 @@ class UserController extends Controller
         $request->session()->regenerateToken();
 
         return response()->noContent();
+    }
+
+    public function show(Request $request): JsonResponse
+    {
+        $user = $request->user();
+
+        ray($user)->red();
+
+        return response()->json([
+            'id' => $user->id,
+            'email' => $user->email
+        ]);
     }
 }
