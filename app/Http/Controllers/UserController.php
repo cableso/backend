@@ -75,11 +75,15 @@ class UserController extends Controller
     {
         $user = $request->user();
 
-        ray($user)->red();
-
         return response()->json([
             'id' => $user->id,
-            'email' => $user->email
+            'email' => $user->email,
+            'projects' => $user->projects->map(function ($project) {
+                return [
+                    'id' => $project->id,
+                    'name' => $project->name
+                ];
+            })
         ]);
     }
 }
