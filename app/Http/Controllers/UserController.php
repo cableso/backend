@@ -46,7 +46,13 @@ class UserController extends Controller
 
             return response()->json([
                 'id' => $user->id,
-                'email' => $request->email
+                'email' => $request->email,
+                'projects' => $user->projects->map(function ($project) {
+                    return [
+                        'id' => $project->id,
+                        'name' => $project->name
+                    ];
+                })
             ]);
         }
 
