@@ -5,10 +5,10 @@ support! We're excited to have you onboard.
 
 To get started, please verify your account by clicking the button below:
 
-Verify my account [https://cable.so/verify]
+Verify my account [{{ $verifyUrl }}]
 
-or copy and paste this URL into your browser: https://cable.so/verify
-[https://cable.so/verify]
+or copy and paste this URL into your browser: {{ $verifyUrl }}
+[{{ $verifyUrl }}]
 
 Once your account is verified, you'll be ready to start transforming your
 customer support experience. We can't wait for you to join us!
